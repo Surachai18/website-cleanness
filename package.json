@@ -1,12 +1,11 @@
 {
   "name": "website-cleanness",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/input.css -o ./dist/style.css",
-    "build": "npm run build:css && node build.js",
+    "build": "node build.js",
     "check:build": "node check-build.js",
+    "optimize-images": "node scripts/optimize-images.js",
     "start": "node server.js"
   },
   "keywords": [],

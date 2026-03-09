@@ -1,9 +1,17 @@
 module.exports = {
-  content: ["./index.html"],
+  content: [
+    "./index.html",
+    "./contact.html",
+    "./services.html",
+    "./portfolio.html",
+    "./reviews.html",
+    "./faq.html",
+    "./why-choose-us.html"
+  ],
   theme: {
     extend: {
-      fontFamily: { 
-        sans: ['Inter', 'Prompt', 'ui-sans-serif', 'system-ui'] 
+      fontFamily: {
+        sans: ['Inter', 'Prompt', 'ui-sans-serif', 'system-ui']
       },
       colors: {
         brand: {
@@ -22,8 +30,8 @@ module.exports = {
           500: '#f46e25',
           600: '#d45a1f'
         },
-        gold: { 
-          400: '#f46e25' 
+        gold: {
+          400: '#f46e25'
         }
       },
       boxShadow: {

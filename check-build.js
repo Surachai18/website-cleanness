@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 
 const distPath = path.join(__dirname, 'dist');
@@ -9,7 +9,6 @@ const requiredFiles = [
   'index.html',
   'style.css',
   'src/assets/logo.png',
-  'src/assets/portfolio-1.jpg',
   'src/qrcode.png'
 ];
 

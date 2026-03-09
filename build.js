@@ -35,20 +35,27 @@ if (fs.existsSync(distPath)) {
   }
 }
 
-console.log('Copying index.html...');
-let htmlContent = fs.readFileSync(
-  path.join(__dirname, 'index.html'),
-  'utf8'
-);
-htmlContent = htmlContent.replace(/\.\/dist\/style\.css/g, './style.css');
-htmlContent = htmlContent.replace(/src=["']src\//g, (match) => {
-  return match.replace('src/', '/src/');
-});
-fs.writeFileSync(
-  path.join(distPath, 'index.html'),
-  htmlContent,
-  'utf8'
-);
+const htmlPages = [
+  'index.html',
+  'services.html',
+  'why-choose-us.html',
+  'portfolio.html',
+  'reviews.html',
+  'faq.html',
+  'contact.html'
+];
+for (const name of htmlPages) {
+  const srcPath = path.join(__dirname, name);
+  if (!fs.existsSync(srcPath)) continue;
+  console.log('Copying ' + name + '...');
+  let htmlContent = fs.readFileSync(srcPath, 'utf8');
+  htmlContent = htmlContent.replace(/\.\/dist\/style\.css/g, './style.css');
+  htmlContent = htmlContent.replace(/href="\.\/style\.css"/g, 'href="./style.css"');
+  htmlContent = htmlContent.replace(/src=["']src\//g, (match) => {
+    return match.replace('src/', '/src/');
+  });
+  fs.writeFileSync(path.join(distPath, name), htmlContent, 'utf8');
+}
 
 console.log('Copying style.css...');
 fs.copyFileSync(
