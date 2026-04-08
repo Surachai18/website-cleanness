@@ -2,16 +2,13 @@
   "name": "website-cleanness",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run check:build",
     "build": "node build.js",
     "check:build": "node check-build.js",
     "optimize-images": "node scripts/optimize-images.js",
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
     "tailwindcss": "^4.1.18"

@@ -12,6 +12,26 @@ const requiredFiles = [
   'src/qrcode.png'
 ];
 
+const htmlFiles = [
+  'index.html',
+  'about-cleanness.html',
+  'services.html',
+  'service-big-cleaning.html',
+  'service-general-cleaning-6-steps.html',
+  'service-floor-scrubbing-polishing.html',
+  'service-glass-wiping.html',
+  'service-bathroom-cleaning.html',
+  'service-kitchen-cleaning.html',
+  'service-mattress-sofa-dust-mite.html',
+  'service-disinfection-deodorizing.html',
+  'service-pressure-washing.html',
+  'why-choose-us.html',
+  'portfolio.html',
+  'reviews.html',
+  'faq.html',
+  'contact.html'
+];
+
 function exists(relPath) {
   return fs.existsSync(path.join(distPath, relPath));
 }
@@ -21,6 +41,12 @@ function decodeHtmlAttr(value) {
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
+}
+
+function logIssues(items, logger) {
+  for (const item of items) {
+    logger(`- ${item}`);
+  }
 }
 
 console.log('Checking dist build...');
@@ -40,16 +66,21 @@ for (const file of requiredFiles) {
   }
 }
 
-const htmlPath = path.join(distPath, 'index.html');
-if (fs.existsSync(htmlPath)) {
+for (const htmlFile of htmlFiles) {
+  const htmlPath = path.join(distPath, htmlFile);
+  if (!fs.existsSync(htmlPath)) {
+    errors.push(`Missing HTML page in dist: ${htmlFile}`);
+    continue;
+  }
+
   const html = fs.readFileSync(htmlPath, 'utf8');
 
   if (html.includes('./dist/style.css')) {
-    errors.push('index.html still points to ./dist/style.css. It must point to ./style.css in dist build.');
+    errors.push(`${htmlFile} still points to ./dist/style.css. It must point to ./style.css in dist build.`);
   }
 
   if (!html.includes('./style.css')) {
-    warnings.push('Could not find ./style.css in dist/index.html.');
+    warnings.push(`Could not find ./style.css in dist/${htmlFile}.`);
   }
 
   const srcMatches = [...html.matchAll(/\ssrc=["']([^"']+)["']/g)].map((m) => decodeHtmlAttr(m[1]));
@@ -61,18 +92,18 @@ if (fs.existsSync(htmlPath)) {
     if (!exists(normalized)) {
       missingImageCount += 1;
       if (missingImageCount <= 10) {
-        errors.push(`Missing image referenced by dist/index.html: ${img}`);
+        errors.push(`Missing image referenced by dist/${htmlFile}: ${img}`);
       }
     }
   }
 
   if (missingImageCount > 10) {
-    errors.push(`...and ${missingImageCount - 10} more missing images.`);
+    errors.push(`dist/${htmlFile} has ${missingImageCount} missing images. Showing first 10 only.`);
   }
 
   const relativeSrcPaths = imageSrc.filter((p) => p.startsWith('src/'));
   if (relativeSrcPaths.length > 0) {
-    warnings.push(`Found ${relativeSrcPaths.length} relative image path(s) in dist/index.html. Prefer /src/...`);
+    warnings.push(`Found ${relativeSrcPaths.length} relative image path(s) in dist/${htmlFile}. Prefer /src/...`);
   }
 }
 
@@ -80,17 +111,8 @@ console.log('\nSummary');
 console.log(`Errors: ${errors.length}`);
 console.log(`Warnings: ${warnings.length}`);
 
-if (errors.length > 0) {
-  for (const e of errors) {
-    console.error(`- ${e}`);
-  }
-}
-
-if (warnings.length > 0) {
-  for (const w of warnings) {
-    console.warn(`- ${w}`);
-  }
-}
+if (errors.length > 0) logIssues(errors, console.error);
+if (warnings.length > 0) logIssues(warnings, console.warn);
 
 if (errors.length > 0) {
   process.exit(1);

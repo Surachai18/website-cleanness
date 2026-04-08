@@ -1,17 +1,49 @@
 const fs = require('fs');
 const path = require('path');
 
+const distPath = path.join(__dirname, 'dist');
+const htmlPages = [
+  'index.html',
+  'about-cleanness.html',
+  'services.html',
+  'service-big-cleaning.html',
+  'service-general-cleaning-6-steps.html',
+  'service-floor-scrubbing-polishing.html',
+  'service-glass-wiping.html',
+  'service-bathroom-cleaning.html',
+  'service-kitchen-cleaning.html',
+  'service-mattress-sofa-dust-mite.html',
+  'service-disinfection-deodorizing.html',
+  'service-pressure-washing.html',
+  'why-choose-us.html',
+  'portfolio.html',
+  'reviews.html',
+  'faq.html',
+  'contact.html'
+];
+const rootFiles = [
+  'robots.txt',
+  'sitemap.xml',
+  'favicon.ico',
+  'favicon-16x16.png',
+  'favicon-32x32.png',
+  'apple-touch-icon.png',
+  'android-chrome-192x192.png',
+  'android-chrome-512x512.png',
+  'site.webmanifest'
+];
+
 function copyDir(src, dest) {
   if (!fs.existsSync(dest)) {
     fs.mkdirSync(dest, { recursive: true });
   }
-  
+
   const entries = fs.readdirSync(src, { withFileTypes: true });
-  
+
   for (const entry of entries) {
     const srcPath = path.join(src, entry.name);
     const destPath = path.join(dest, entry.name);
-    
+
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
     } else {
@@ -20,40 +52,36 @@ function copyDir(src, dest) {
   }
 }
 
-console.log('Cleaning dist folder...');
-const distPath = path.join(__dirname, 'dist');
-if (fs.existsSync(distPath)) {
-  const files = fs.readdirSync(distPath);
-  for (const file of files) {
-    const filePath = path.join(distPath, file);
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      fs.rmSync(filePath, { recursive: true, force: true });
+function emptyDir(targetPath) {
+  if (!fs.existsSync(targetPath)) {
+    fs.mkdirSync(targetPath, { recursive: true });
+    return;
+  }
+
+  for (const entry of fs.readdirSync(targetPath, { withFileTypes: true })) {
+    const entryPath = path.join(targetPath, entry.name);
+    if (entry.isDirectory()) {
+      fs.rmSync(entryPath, { recursive: true, force: true });
     } else {
-      fs.unlinkSync(filePath);
+      fs.unlinkSync(entryPath);
     }
   }
 }
 
-const htmlPages = [
-  'index.html',
-  'services.html',
-  'why-choose-us.html',
-  'portfolio.html',
-  'reviews.html',
-  'faq.html',
-  'contact.html'
-];
+function normalizeHtml(htmlContent) {
+  return htmlContent
+    .replace(/\.\/dist\/style\.css/g, './style.css')
+    .replace(/src=(["'])src\//g, 'src=$1/src/');
+}
+
+console.log('Cleaning dist folder...');
+emptyDir(distPath);
+
 for (const name of htmlPages) {
   const srcPath = path.join(__dirname, name);
   if (!fs.existsSync(srcPath)) continue;
   console.log('Copying ' + name + '...');
-  let htmlContent = fs.readFileSync(srcPath, 'utf8');
-  htmlContent = htmlContent.replace(/\.\/dist\/style\.css/g, './style.css');
-  htmlContent = htmlContent.replace(/href="\.\/style\.css"/g, 'href="./style.css"');
-  htmlContent = htmlContent.replace(/src=["']src\//g, (match) => {
-    return match.replace('src/', '/src/');
-  });
+  const htmlContent = normalizeHtml(fs.readFileSync(srcPath, 'utf8'));
   fs.writeFileSync(path.join(distPath, name), htmlContent, 'utf8');
 }
 
@@ -73,17 +101,6 @@ for (const file of gscFiles) {
   );
 }
 
-const rootFiles = [
-  'robots.txt',
-  'sitemap.xml',
-  'favicon.ico',
-  'favicon-16x16.png',
-  'favicon-32x32.png',
-  'apple-touch-icon.png',
-  'android-chrome-192x192.png',
-  'android-chrome-512x512.png',
-  'site.webmanifest'
-];
 for (const file of rootFiles) {
   const srcPath = path.join(__dirname, file);
   if (fs.existsSync(srcPath)) {
