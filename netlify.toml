@@ -4,6 +4,18 @@
   functions = "netlify/functions"
 
 [[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://cleanness.app/*"
+  to = "https://www.cleanness.app/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200

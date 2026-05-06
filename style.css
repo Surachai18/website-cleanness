@@ -2309,23 +2309,6 @@
   min-width: 0;
 }
 
-.portfolio-block-label {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #33cfd7;
-  margin-bottom: 0.25rem;
-}
-
-@media (min-width: 640px) {
-  .portfolio-block-label {
-    font-size: 0.7rem;
-    margin-bottom: 0.35rem;
-  }
-}
-
 .portfolio-block-title {
   font-size: 1rem;
   font-weight: 700;
@@ -2350,7 +2333,10 @@
 /* Keep footer/contact CTA readable on narrow mobile widths. */
 .contact-cta-banner {
   line-height: 1.8;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .contact-cta-banner a {
@@ -2359,10 +2345,133 @@
 
 @media (max-width: 639px) {
   .contact-cta-banner {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.9;
     padding-top: 1.25rem !important;
     padding-bottom: 1.25rem !important;
+  }
+
+  /* Keep mobile menu layout consistent across all pages. */
+  #mobileMenu > div > a {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+
+  #mobileMenu > div > a svg,
+  #mobileMenu .mobile-cta svg {
+    display: none !important;
+  }
+
+  #mobileMenu .mobile-cta {
+    width: fit-content !important;
+    min-width: 0 !important;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    gap: 0.45rem !important;
+    flex: 0 0 auto !important;
+  }
+
+  #mobileMenu .mobile-cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+  }
+
+  #mobileMenu .mobile-cta-row .mobile-cta {
+    margin: 0;
+  }
+
+  #mobileMenu .mobile-cta-row a[href="/contact.html"] {
+    background-color: #33cfd7 !important;
+    color: #ffffff !important;
+  }
+
+  #mobileMenu .mobile-cta-row a[href="/#quote"],
+  #mobileMenu .mobile-cta-row a[href="#quote"] {
+    background-color: #f46e25 !important;
+    color: #ffffff !important;
+  }
+
+  #mobileMenu .mobile-phone {
+    font-size: 0.84rem !important;
+    line-height: 1.3;
+  }
+
+  body.page-home #mobileMenu a[href="/"],
+  body.about-shell #mobileMenu a[href="/about-cleanness.html"],
+  body.page-services #mobileMenu a[href="/services.html"],
+  body.page-why-choose-us #mobileMenu a[href="/why-choose-us.html"],
+  body.page-portfolio #mobileMenu a[href="/portfolio.html"],
+  body.page-reviews #mobileMenu a[href="/reviews.html"],
+  body.page-faq #mobileMenu a[href="/faq.html"] {
+    color: #f46e25 !important;
+    font-weight: 400 !important;
+  }
+}
+
+/* Shared navigation finish across pages. */
+#header {
+  background: #ffffff !important;
+  border-bottom: none !important;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+#header nav a {
+  overflow: hidden;
+}
+
+#header nav a .relative.z-10 {
+  font-size: 0.95rem !important;
+}
+
+#header nav a > .absolute.inset-0 {
+  display: none !important;
+}
+
+#header nav a:hover,
+#header nav a:active,
+#header nav a:focus-visible {
+  background: transparent !important;
+  transform: none !important;
+}
+
+#header nav a:hover .relative.z-10,
+#header nav a:active .relative.z-10,
+#header nav a:focus-visible .relative.z-10 {
+  color: #f46e25 !important;
+}
+
+body.page-home #header nav a[href="/"] .relative.z-10,
+body.about-shell #header nav a[href="/about-cleanness.html"] .relative.z-10,
+body.page-services #header nav a[href="/services.html"] .relative.z-10,
+body.page-why-choose-us #header nav a[href="/why-choose-us.html"] .relative.z-10,
+body.page-portfolio #header nav a[href="/portfolio.html"] .relative.z-10,
+body.page-reviews #header nav a[href="/reviews.html"] .relative.z-10,
+body.page-faq #header nav a[href="/faq.html"] .relative.z-10 {
+  color: #f46e25 !important;
+  font-weight: 400 !important;
+}
+
+#header nav a::before {
+  content: none !important;
+  display: none !important;
+}
+
+#header nav a:hover::before {
+  opacity: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  #header > .max-w-7xl {
+    height: 88px !important;
   }
 }
 
