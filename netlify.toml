@@ -19,3 +19,106 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# Canonical URLs use .html — redirect pretty paths to avoid duplicate indexing
+[[redirects]]
+  from = "/about-cleanness"
+  to = "/about-cleanness.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/services.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/why-choose-us"
+  to = "/why-choose-us.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/portfolio.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reviews"
+  to = "/reviews.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/site-map"
+  to = "/site-map.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-big-cleaning"
+  to = "/service-big-cleaning.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-general-cleaning-6-steps"
+  to = "/service-general-cleaning-6-steps.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-floor-scrubbing-polishing"
+  to = "/service-floor-scrubbing-polishing.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-glass-wiping"
+  to = "/service-glass-wiping.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-bathroom-cleaning"
+  to = "/service-bathroom-cleaning.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-kitchen-cleaning"
+  to = "/service-kitchen-cleaning.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-mattress-sofa-dust-mite"
+  to = "/service-mattress-sofa-dust-mite.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-disinfection-deodorizing"
+  to = "/service-disinfection-deodorizing.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-pressure-washing"
+  to = "/service-pressure-washing.html"
+  status = 301
+  force = true
